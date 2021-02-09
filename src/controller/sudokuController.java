@@ -25,10 +25,7 @@ import model.PopUpMSG;
 /**
  * FXML Controller class
  *
- * I've tried to clean all the code from this class which was not from
- * controller. This makes me create as many classes as functions I see to manage
- * this. The reason why I do this is because this controller was with >800 lines
- * of code and it smells like an endless spaghetti here...
+ * 
  *
  * @author LuisDAM
  */
