@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="MainPain" id="AnchorPane" focusTraversable="true" prefHeight="515.0" prefWidth="1059.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.sudokuController">
+   <children>
+      <Label layoutX="287.0" layoutY="42.0" prefHeight="30.0" prefWidth="480.0" style="-fx-alignment: center; -fx-font-family: arial; -fx-font-size: 25px;" text="Sudoku - resolver 2000" />
+      <Label layoutX="908.0" layoutY="161.0" prefHeight="30.0" prefWidth="67.0" style="-fx-font-family: arial;" text="Cars" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      
+   </children>
+</AnchorPane>
