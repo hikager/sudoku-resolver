@@ -7,25 +7,13 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.SwipeEvent;
-import javafx.stage.Stage;
 import model.PopUpMSG;
 
-
 /**
- * FXML Controller class
- *
- * 
+ * FXML Controller class for Sudoku view
  *
  * @author LuisDAM
  */
