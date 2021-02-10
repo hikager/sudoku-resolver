@@ -9,33 +9,40 @@ package model;
  *
  * @author LuisDAM
  */
-public class Sudoku {
-
-    private final int ROW_LENTGH = 9;
-    private final int COL_LENTGH = 9;
+public class SudokuResolver extends Sudoku {
 
     private int sudokuM[][];
     private boolean sudokuViewM[][];
 
-    public Sudoku() {
-        sudokuM = new int[ROW_LENTGH][COL_LENTGH];
-        sudokuViewM = new boolean[ROW_LENTGH][COL_LENTGH];
+    public SudokuResolver(int rowLen, int colLen) {
+        super(rowLen, colLen);
     }
 
-    private void initSudokuMatrix() {
-        for (int row = 0; row < ROW_LENTGH; row++) {
-            for (int col = 0; col < COL_LENTGH; col++) {
-                sudokuM[row][col] = 0;
-            }
-        }
+    public SudokuResolver() {
+        super();
+
+        sudokuM = super.getSudokuM();
+        sudokuViewM = super.getSudokuViewM();
     }
 
-    private void initSudokuViewMatrix() {
-        for (int row = 0; row < ROW_LENTGH; row++) {
-            for (int col = 0; col < COL_LENTGH; col++) {
-                sudokuViewM[row][col] = false;
+    public String getSudokuState() {
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            int rowLen = sudokuM.length;
+            int colLen = sudokuM[0].length;
+            for (int r = 0; r < rowLen; r++) {
+                for (int c = 0; c < colLen; c++) {
+                    sb.append(sudokuM[r][c]);
+                }
+                sb.append("\n");
             }
+        } catch (Exception e) {
+            System.out.println("Error while reading sudoku matrix: " + e.getMessage());
+
         }
+
+        return sb.toString();
     }
 
 }
