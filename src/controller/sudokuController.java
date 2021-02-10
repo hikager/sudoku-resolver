@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import model.PopUpMSG;
+import model.SudokuResolver;
 
 /**
  * FXML Controller class for Sudoku view
@@ -34,6 +35,8 @@ public class sudokuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("HEY!");
+        SudokuResolver sr = new SudokuResolver();
+        System.out.println(sr.getSudokuState());
     }
 
 }

@@ -9,7 +9,7 @@ package model;
  *
  * @author LuisDAM
  */
-public abstract class Sudoku  {
+public abstract class Sudoku {
 
     private final int ROW_LENTGH;
     private final int COL_LENTGH;
@@ -20,11 +20,13 @@ public abstract class Sudoku  {
     public Sudoku(int ROW_LENTGH, int COL_LENTGH) {
         this.ROW_LENTGH = ROW_LENTGH;
         this.COL_LENTGH = COL_LENTGH;
+        initSudoku();
     }
 
     public Sudoku() {
         this.ROW_LENTGH = 9;
         this.COL_LENTGH = 9;
+        initSudoku();
     }
 
     public int getROW_LENTGH() {
@@ -65,7 +67,5 @@ public abstract class Sudoku  {
             }
         }
     }
-    
-   
 
 }
