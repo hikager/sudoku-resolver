@@ -3,10 +3,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="MainPain" focusTraversable="true" prefHeight="637.0" prefWidth="1146.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.sudokuController">
+<AnchorPane id="AnchorPane" fx:id="MainPain" focusTraversable="true" prefHeight="637.0" prefWidth="1146.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.sudokuController">
    <children>
       <Label layoutX="287.0" layoutY="42.0" prefHeight="30.0" prefWidth="480.0" style="-fx-alignment: center; -fx-font-family: arial; -fx-font-size: 25px;" text="Sudoku - resolver 2000" />
-      <AnchorPane fx:id="sudokuPane" layoutX="139.0" layoutY="102.0" prefHeight="459.0" prefWidth="854.0" />
+      <AnchorPane fx:id="sudokuPane" layoutX="139.0" layoutY="102.0" prefHeight="459.0" prefWidth="854.0" style="-fx-border-color: black;" />
       
    </children>
 </AnchorPane>

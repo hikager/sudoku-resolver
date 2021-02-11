@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import model.PopUpMSG;
 import model.SudokuResolver;
+import model.viewsudoku.ViewSudoku;
 
 /**
  * FXML Controller class for Sudoku view
@@ -27,8 +28,7 @@ public class sudokuController implements Initializable {
     //Per mostrar errors o altres
     private PopUpMSG popUpMsg;
 
-    private int SUDOKU_PANE_WIDTH = 854;
-    private int SUDOKU_PANE_HEIGHT = 459;
+    private ViewSudoku viewSudoku;
 
     @FXML
     private AnchorPane MainPain;
@@ -44,27 +44,10 @@ public class sudokuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Creating a matrix of text-boxes
+        this.viewSudoku = new ViewSudoku();
+        this.viewSudoku.initTextBoxesMatrix(sudokuPane);
 
-        //TODO : Pass all this sudoku view maker into a class which will be called 'SudokuViewMaker'
-        //To separate each record (text-field) I decied to set a constant width and height
-        //from the SudokuView.fxml (view) sudokuPane object.
-        double lenTxt = (SUDOKU_PANE_WIDTH / 9); //Width / number of columns
-        double lenY = (SUDOKU_PANE_HEIGHT / 9); // Width / number of rows
-        for (int i = 0; i < 9; i++) {
-
-            for (int j = 0; j < 9; j++) {
-                TextField txtF = new TextField("" + 9);
-                System.out.println(lenTxt * i);
-                txtF.setLayoutX(lenTxt * i);
-                txtF.setLayoutY(lenY * j);
-                txtF.setPrefWidth(30);
-                sudokuPane.getChildren().add(txtF);
-            }
-
-        }
-
-        System.out.println("x lentgh: " + sudokuPane.widthProperty().get());
-        System.out.println("HEY!");
         SudokuResolver sr = new SudokuResolver();
         System.out.println(sr.getSudokuState());
 
