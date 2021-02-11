@@ -41,7 +41,7 @@ public class ViewSudoku {
                 posY = lenY * j;
                 posY += 10;
 
-                TextField txtF = new TextField("" + 9);
+                TextField txtF = new TextField("" + 0);
                 txtF.setStyle("-fx-font-size:15px;");
                 System.out.printf("New textBox at (%f,%f)\n", posX, posY);
                 txtF.setLayoutX(posX);
