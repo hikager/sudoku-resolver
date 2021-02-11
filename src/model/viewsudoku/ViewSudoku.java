@@ -50,6 +50,10 @@ public class ViewSudoku {
                 txtF.setLayoutY(posY);
                 txtF.setPrefWidth(TEXTBOX_WIDTH);
 
+                txtF.setOnMouseClicked((event) -> {
+                    String textFieldId = event.getPickResult().getIntersectedNode().getId();
+                    System.out.println("Element id selected: " + textFieldId);
+                });
                 sudokuPane.getChildren().add(txtF);
             }
 
@@ -57,4 +61,5 @@ public class ViewSudoku {
         }
         System.out.println("\nMatrix of text-boxes generated...");
     }
+
 }

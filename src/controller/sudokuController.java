@@ -50,6 +50,8 @@ public class sudokuController implements Initializable {
 
         SudokuResolver sr = new SudokuResolver();
         System.out.println(sr.getSudokuState());
+        
+        
 
     }
 
