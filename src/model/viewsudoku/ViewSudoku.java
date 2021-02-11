@@ -43,7 +43,9 @@ public class ViewSudoku {
 
                 TextField txtF = new TextField("" + 0);
                 txtF.setStyle("-fx-font-size:15px;");
-                System.out.printf("New textBox at (%f,%f)\n", posX, posY);
+                //id format : textInput_rowNumber_colNumber
+                txtF.setId("textInput_" + i + "_" + j);
+                System.out.printf("New textBox at (%f,%f) with id: %s\n", posX, posY, "textInput_" + i + "_" + j);
                 txtF.setLayoutX(posX);
                 txtF.setLayoutY(posY);
                 txtF.setPrefWidth(TEXTBOX_WIDTH);
