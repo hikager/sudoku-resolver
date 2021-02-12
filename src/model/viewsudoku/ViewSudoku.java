@@ -75,7 +75,7 @@ public class ViewSudoku {
 
         txtF.setOnMouseClicked((event) -> {
             String textFieldId = event.getPickResult().getIntersectedNode().getId();
-            System.out.println("Element id selected: " + textFieldId);
+            System.out.println("Element id selected: textInput_"+i+"_"+j);
         });
         sudokuPane.getChildren().add(txtF);
 
