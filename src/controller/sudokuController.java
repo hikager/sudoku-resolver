@@ -45,8 +45,8 @@ public class sudokuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Creating a matrix of text-boxes
-        this.viewSudoku = new ViewSudoku();
-        this.viewSudoku.initTextBoxesMatrix(sudokuPane);
+        this.viewSudoku = new ViewSudoku(sudokuPane);
+        this.viewSudoku.initTextBoxesMatrix();
 
         SudokuResolver sr = new SudokuResolver();
         System.out.println(sr.getSudokuState());
