@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  *
  * @author LuisDAM
+ * @deprecated It only creates a simple Sudoku structure made of text fields
  */
 public class ViewSudoku {
 
@@ -22,7 +23,7 @@ public class ViewSudoku {
 
     private Semaphore semaphore;
 
-    private double lenTxt = (SUDOKU_PANE_WIDTH / 9); //Width / number of columns
+    private double lenX = (SUDOKU_PANE_WIDTH / 9); //Width / number of columns
     private double lenY = (SUDOKU_PANE_HEIGHT / 9); // Width / number of rows
 
     private int TEXTBOX_WIDTH = 30;
@@ -55,7 +56,7 @@ public class ViewSudoku {
         double posX = 0, posY = 0;
         for (int i = 0; i < 9; i++) {
             System.out.println("Row number: " + (i + 1));
-            posX = lenTxt * i;
+            posX = lenX * i;
             for (int j = 0; j < 9; j++) {
                 TextField txtF = new TextField("" + 0);
                 textFMatrix[i][j] = setProperties(i, j, posX, posY);

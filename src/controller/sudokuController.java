@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import model.PopUpMSG;
 import model.SudokuResolver;
+import model.viewsudoku.MatrixView;
 import model.viewsudoku.ViewSudoku;
 
 /**
@@ -45,13 +46,14 @@ public class sudokuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Creating a matrix of text-boxes
-        this.viewSudoku = new ViewSudoku(sudokuPane);
-        this.viewSudoku.initTextBoxesMatrix();
+
+        MatrixView matrixView = new MatrixView(sudokuPane);
+        matrixView.initTextBoxesMatrix();
+        //this.viewSudoku = new ViewSudoku(sudokuPane);
+        //this.viewSudoku.initTextBoxesMatrix();
 
         SudokuResolver sr = new SudokuResolver();
         System.out.println(sr.getSudokuState());
-        
-        
 
     }
 

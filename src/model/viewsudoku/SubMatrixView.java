@@ -29,13 +29,11 @@ public class SubMatrixView {
     /**
      * Position of the textField in AXIS-X.
      */
-    @Deprecated
     private double lenX;
 
     /**
      * Position of the textField in AXIS-Y.
      */
-    @Deprecated
     private double lenY;
 
     /**
@@ -48,10 +46,6 @@ public class SubMatrixView {
      */
     private double positionY;
 
-    private int sudokuPainWidth;
-
-    private int sudokuPainHeight;
-
     private int TEXTBOX_WIDTH = 30;
 
     /**
@@ -59,9 +53,18 @@ public class SubMatrixView {
      */
     private AnchorPane sudokuPane;
 
+    private int offsetX;
+    private int offsetY;
+
     public SubMatrixView(AnchorPane sudokuPane,
             double positionX, double positionY,
-            int sudokuPainWidth, int sudokuPainHeight) {
+            double lenX, double lenY,
+            int offsetX, int offsetY) {
+
+        this.lenX = lenX;
+        this.lenY = lenY;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
 
         this.sudokuPane = sudokuPane;
         subMatrix = new TextField[LENGTH][LENGTH];
@@ -73,49 +76,72 @@ public class SubMatrixView {
         then:
                 1/3 first, 2/3 second, 3/3 and third element
          */
-        this.positionX = positionX / LENGTH;
-        this.positionY = positionY / LENGTH;
+        this.positionX = positionX;
+        this.positionY = positionY;
 
-        this.sudokuPainWidth = sudokuPainWidth;
-        this.sudokuPainHeight = sudokuPainHeight;
+        initSubMatrix();
     }
 
     private void initSubMatrix() {
-        double posX = 0, posY = 0;
-        for (int i = 0; i < LENGTH; i++) {
-            posX = positionX * i;
-            for (int j = 0; j < LENGTH; j++) {
+        double posY = positionY;
+        for (int i = 0; i < LENGTH; i++) { //filas -> y
+            double posX = positionX;
+
+            for (int j = 0; j < LENGTH; j++) { //columnas -> x
+
                 TextField txtF = new TextField("" + 0);
                 subMatrix[i][j] = setProperties(i, j, posX, posY);
+                posX += lenX;//j * offsetX;
             }
+            posY += lenY;
         }
+
+        System.out.println("Submatrix created!");
     }
 
     private TextField setProperties(int i, int j, double posX, double posY) {
 
-        //posX += 35;
         System.out.println("J=" + j);
-        posY = positionY * j;
-        //posY += 10;
+        // posY = positionY + j * offsetY;
 
         TextField txtF = new TextField("" + 0);
         txtF.setStyle("-fx-font-size:15px;");
         //id format : textInput_rowNumber_colNumber
         txtF.setId("textInput_" + i + "_" + j);
-        System.out.printf("New textBox at (%f,%f) with id: %s\n", posX, posY, "textInput_" + i + "_" + j);
+        System.out.printf("New textBox at (%f,%f) with id: %s\n", posX, posY, "textInput_" + offsetX + "_" + offsetY + "_" + i + "_" + j);
+
         txtF.setLayoutX(posX);
         txtF.setLayoutY(posY);
         txtF.setPrefWidth(TEXTBOX_WIDTH);
 
         txtF.setOnMouseClicked((event) -> {
-            // String textFieldId = event.getPickResult().getIntersectedNode().getId();
+            System.out.println("---------------------------[Data info for clicked text:]--------------------------------");
             System.out.println("Element id selected: textInput_" + i + "_" + j);
+            System.out.println("matrix position: " + offsetX + "_" + offsetY);
+            System.out.println("sub-matrix position: " + i + "_" + j);
+            System.out.println("---------------------------------------------------------------------------------------");
         });
         sudokuPane.getChildren().add(txtF);
 
         return txtF;
 
         //We store our custom text field into the matrix
+    }
+
+    public TextField[][] getSubMatrix() {
+        return subMatrix;
+    }
+
+    public int getLENGTH() {
+        return LENGTH;
+    }
+
+    public int getTEXTBOX_WIDTH() {
+        return TEXTBOX_WIDTH;
+    }
+
+    public AnchorPane getSudokuPane() {
+        return sudokuPane;
     }
 
 }
