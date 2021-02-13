@@ -16,7 +16,7 @@ import java.util.concurrent.Semaphore;
  * @see model.viewsudoku.ViewSudoku
  * @author LuisDAM
  */
-public class SudokuResolver extends Sudoku implements Runnable {
+public class SudokuResolver extends Sudoku{
 
     private int sudokuM[][];
     private boolean sudokuViewM[][];
@@ -33,8 +33,5 @@ public class SudokuResolver extends Sudoku implements Runnable {
         sudokuViewM = super.getSudokuViewM();
     }
 
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  //TODO Esta classe es quien "manage" la resolucion (esta inicia los hilos y demas)
 }
