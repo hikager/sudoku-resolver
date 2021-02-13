@@ -1,26 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
+import java.util.concurrent.Semaphore;
+
 /**
+ * This class extends from Sudoku and it inherits both the Sudoku matrix and
+ * Sudoku View Matrix (to check fixed positions)
  *
+ * It actually done what its name says, It will solve a Sudoku matrix.
+ *
+ * For this project this class will use or will be "bind" with the numbers in the
+ * Sudoku which is made from JavaFx. These two classes will exchange each other
+ * the numbers in the Sudoku.
+ * 
+ * @see model.Sudoku
+ * @see model.viewsudoku.ViewSudoku
  * @author LuisDAM
  */
-public class SudokuResolver extends Sudoku {
+public class SudokuResolver extends Sudoku implements Runnable {
 
     private int sudokuM[][];
     private boolean sudokuViewM[][];
+    private Semaphore semaphore;
 
-    public SudokuResolver(int rowLen, int colLen) {
+    public SudokuResolver(int rowLen, int colLen, Semaphore semaphore) {
         super(rowLen, colLen);
+        this.semaphore = semaphore;
     }
 
     public SudokuResolver() {
         super();
         sudokuM = super.getSudokuM();
         sudokuViewM = super.getSudokuViewM();
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

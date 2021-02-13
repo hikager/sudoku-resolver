@@ -1,12 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 /**
+ * It creates a matrix for a Sudoku, so we can thing as a Sudoku data structure.
+ * We can define the rows and columns length o just setting as default Sudoku
+ * which has 9x9 structure.
  *
+ * As an abstract class it cannot be instantiated but for this project this one
+ * works a "data-structure" for its SudokuResolver inherited class.
+ *
+ * @see model.SudokuResolver
  * @author LuisDAM
  */
 public abstract class Sudoku {
