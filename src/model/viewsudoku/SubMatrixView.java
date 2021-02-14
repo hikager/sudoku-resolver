@@ -53,7 +53,13 @@ public class SubMatrixView {
      */
     private AnchorPane sudokuPane;
 
+    /**
+     * It moves each block of sub-matrices in the axis-X
+     */
     private int offsetX;
+    /**
+     * It moves each block of sub-matrices in the axis-Y
+     */
     private int offsetY;
 
     public SubMatrixView(AnchorPane sudokuPane,
@@ -82,6 +88,9 @@ public class SubMatrixView {
         initSubMatrix();
     }
 
+    /**
+     *
+     */
     private void initSubMatrix() {
         double posY = positionY;
         for (int i = 0; i < LENGTH; i++) { //filas -> y
@@ -99,6 +108,17 @@ public class SubMatrixView {
         System.out.println("Submatrix created!");
     }
 
+    /**
+     *
+     * It sets the properties for each text-field
+     *
+     * @param i the position X in the sub-matrix for the id
+     *
+     * @param j the position Y in the sub-matrix for the id
+     * @param posX To position the text-field in the axis-X
+     * @param posY To position the text-field in the axis-Y
+     * @return a textField object in a specific position
+     */
     private TextField setProperties(int i, int j, double posX, double posY) {
 
         System.out.println("J=" + j);

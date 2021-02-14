@@ -16,11 +16,25 @@ import javafx.scene.layout.AnchorPane;
  */
 public class ViewSudoku {
 
-    //Si es modifiquès el Pane aquest hauria de
-    //canviarlo manualment
+    /**
+     * from view.SudokuView file. I use manually the Anchor pain tag with the
+     * prefWidth=854
+     *
+     * If this value is changed this one needs to be changed too
+     */
     private int SUDOKU_PANE_WIDTH = 854;
+    /**
+     * from view.SudokuView file. I use manually the Anchor pain tag with the
+     * prefHeight==854
+     *
+     * If this value is changed this one needs to be changed too
+     */
     private int SUDOKU_PANE_HEIGHT = 459;
 
+    /**
+     * Object to handle the threads which is going to use an object
+     * from this class
+     */
     private Semaphore semaphore;
 
     private double lenX = (SUDOKU_PANE_WIDTH / 9); //Width / number of columns
