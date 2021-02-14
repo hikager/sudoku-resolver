@@ -41,12 +41,17 @@ public class MatrixView {
     /**
      * Extract from the view package : SudokuView.fxml and id=sudokuPane
      *
+     * I use manually the Anchor pain tag with the prefWidth=854
+     *
      * This is the constant wrapper for the pane's width
      */
     private int SUDOKU_PANE_WIDTH = 854;
 
     /**
      * Extract from the view package : SudokuView.fxml and id=sudokuPane
+     *
+     * I use manually the Anchor pain tag with the prefHeight==854
+     *
      *
      * This is the constant wrapper for the pane's height
      */
@@ -76,8 +81,16 @@ public class MatrixView {
     @Deprecated
     private TextField[][] textFMatrix;
 
+    /**
+     * This is the object pane to add each text-field into the view (to set
+     * visible each text-field)
+     */
     private AnchorPane sudokuPane;
 
+    /**
+     * Object to handle the threads which is going to use an object from this
+     * class
+     */
     private Semaphore semaphore;
 
     public MatrixView(AnchorPane sudokuPane) {
@@ -93,19 +106,78 @@ public class MatrixView {
         semaphore = new Semaphore(semaphoreSlotLimit);
     }
 
+    /**
+     * This function use a complex build.
+     *
+     * <br>
+     * 1. First it creates an object of subMatrixViewClass this object handles
+     * the text-fields and its position in the pane.
+     * <br>
+     * <ol>
+     *
+     * <li>
+     * The constructor of subMatrixViewClass gets the pane to set each
+     * text-field the <b>posX</b> and <b>posY</b> to arrange each text in the
+     * pane
+     * </li>
+     * <li>
+     * Then I pass the lenX and LenY which are the total length of the
+     * sudokuPane divided by 3
+     * </li>
+     * <li>
+     * And the i,j works as the offsets (which sub-matrix are we talking) which
+     * will makes the offset (<i>desplazamiento</i>) from each subMatrix
+     * </li>
+     * </ol>
+     *
+     * <h3>Matrix representation and information: (matrixView)</h3>
+     * <br><br>
+     *
+     * {@code matrix of sub-matrices
+     *
+     *  | s00 | s01 | s02|
+     *  | s10 | s11 | s12|
+     *  | s10 | s11 | s12|
+     *
+     * }
+     * <br> <br>
+     * Each literal {@code s01} stands for s = subMatrix
+     * <br>
+     * The {@code offset in sub-matrix} stands for the i,j in this class
+     *
+     * <br>
+     * <br>
+     *  2. Once the  subMatrixViewClass.getSubMatrix() makes the sub-matrix
+     * we add it to the Matrix matrixView
+     * 
+     * <br>
+     * <br>
+     * 
+     * matrixView [rowA][colA][rowAA][colAA] => multidimensional matrix.<br>
+     * 
+     * <ul>
+     * <li>rowA-> matrixView ROW</li>
+     * <li>colA-> matrixView COLUMN</li>
+     * <li>rowAA-> sub-matrix index for its ROW</li>
+     * <li>colAA-> sub-matrix index for its COLUMNS</li>
+     * </ul>
+     * 
+     * 
+     * @see model.viewsudoku.SubMatrixView
+     */
     public void initTextBoxesMatrix() {
 
         double posY = 20;
         for (int i = 0; i < LENGTH; i++) {
             System.out.println("Row number: " + (i + 1));
             double posX = 35;
-            
+
             for (int j = 0; j < LENGTH; j++) {
                 //posX = lenX * i + 35;
                 this.subMatrixViewClass
                         = new SubMatrixView(this.sudokuPane,
                                 posX, posY,
-                                lenX/LENGTH, lenY/LENGTH,
+                                lenX / LENGTH, lenY / LENGTH,
                                 i, j);
 
                 this.matrixView[i][j] = subMatrixViewClass.getSubMatrix();
