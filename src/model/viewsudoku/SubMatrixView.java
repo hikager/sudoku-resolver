@@ -100,9 +100,9 @@ public class SubMatrixView {
 
                 TextField txtF = new TextField("" + 0);
                 subMatrix[i][j] = setProperties(i, j, posX, posY);
-                posX += lenX;//j * offsetX;
+                posX += lenX-30;//j * offsetX;
             }
-            posY += lenY;
+            posY += lenY-20;
         }
 
         System.out.println("Submatrix created!");
