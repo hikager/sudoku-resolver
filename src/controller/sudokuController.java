@@ -7,6 +7,7 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Semaphore;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -52,8 +53,10 @@ public class sudokuController implements Initializable {
         //this.viewSudoku = new ViewSudoku(sudokuPane);
         //this.viewSudoku.initTextBoxesMatrix();
 
-        SudokuResolver sr = new SudokuResolver();
-        System.out.println(sr.getSudokuState());
+        SudokuResolver sr = new SudokuResolver(new Semaphore(1));
+        System.out.println(sr.getSimpleSudokuState());
+        System.out.println(sr.getComplexSudokuState());
+         System.out.println(sr.getComplexSudokuStateFormatted());
 
     }
 
