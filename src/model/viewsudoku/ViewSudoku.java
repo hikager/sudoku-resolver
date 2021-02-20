@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 
 /**
  *
- * @author LuisDAM
+ * @author LuisML
  * @deprecated It only creates a simple Sudoku structure made of text fields
  */
 public class ViewSudoku {

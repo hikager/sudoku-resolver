@@ -11,7 +11,7 @@ import javafx.scene.control.Alert;
  * Per separar més la capa de Model i conroller. D'aquesta forma podem
  * personalitzar tant com volem els pop-ups o msg per la app.
  *
- * @author LuisDAM
+ * @author LuisML
  *
  */
 public class PopUpMSG {

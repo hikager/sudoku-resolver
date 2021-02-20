@@ -56,7 +56,8 @@ public class sudokuController implements Initializable {
         SudokuResolver sr = new SudokuResolver(new Semaphore(1));
         System.out.println(sr.getSimpleSudokuState());
         System.out.println(sr.getComplexSudokuState());
-         System.out.println(sr.getComplexSudokuStateFormatted());
+        System.out.println(sr.getComplexSudokuStateFormatted());
+        System.out.println(sr.getUserSudokuInputMatrixState());
 
     }
 
