@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.layout.AnchorPane;
 import model.viewsudoku.MatrixView;
 
 /**
@@ -17,7 +18,17 @@ import model.viewsudoku.MatrixView;
  * This class "prepares" the sheet to write on and the SudokuResolver class is
  * the pencil or pen which will use to solve the Sudoku itself.
  *
+ * So this class manage the construction of 3 main matrices:
  *
+ *
+ * 1. complexSudokuM matrix for the calculus (resolving part)
+ *
+ * 2. sudokuUserInputsM matrix for the fixed values (user valid inputs)
+ *
+ * 3. matrix generated from matrixView which will be manage from this class
+ * (this class will init the view too )
+ *
+ * @see model.viewsudoku.MatrixView
  * @see model.SudokuResolver
  * @author LuisML
  */
@@ -26,9 +37,13 @@ public abstract class Sudoku {
     private final int ROW_LENTGH;
     private final int COL_LENTGH;
 
+    /**
+     * @deprecated
+     */
     private int sudokuM[][];
     /**
-     * Class to generate the Sudoku view
+     * Class to generate the Sudoku view and manage the whole view for the
+     * Sudoku values in the matrix of TextFields
      */
     private MatrixView matrixView;
     /**
@@ -42,7 +57,7 @@ public abstract class Sudoku {
      */
     private boolean sudokuUserInputsM[][][][];
 
-    public Sudoku(int ROW_LENTGH, int COL_LENTGH, boolean simpleSudokuStructure) {
+    public Sudoku(int ROW_LENTGH, int COL_LENTGH, boolean simpleSudokuStructure, AnchorPane sudokuPane) {
         this.ROW_LENTGH = ROW_LENTGH;
         this.COL_LENTGH = COL_LENTGH;
         if (simpleSudokuStructure) {
@@ -51,6 +66,8 @@ public abstract class Sudoku {
             initComplexSudokuMatrix();
             initSudokuInputValuesMatrix();
         }
+        matrixView = new MatrixView(sudokuPane);
+        matrixView.initTextBoxesMatrix();
     }
 
     public Sudoku() {

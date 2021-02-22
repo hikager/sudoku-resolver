@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -32,11 +33,15 @@ public class sudokuController implements Initializable {
 
     private ViewSudoku viewSudoku;
 
+    private SudokuResolver sudokuResolver;
+
     @FXML
     private AnchorPane MainPain;
 
     @FXML
     private AnchorPane sudokuPane;
+    @FXML
+    private Button btnResolve;
 
     /**
      *
@@ -48,17 +53,36 @@ public class sudokuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //Creating a matrix of text-boxes
 
-        MatrixView matrixView = new MatrixView(sudokuPane);
-        matrixView.initTextBoxesMatrix();
+        //MatrixView matrixView = new MatrixView(sudokuPane);
+        // matrixView.initTextBoxesMatrix();
         //this.viewSudoku = new ViewSudoku(sudokuPane);
         //this.viewSudoku.initTextBoxesMatrix();
+        sudokuResolver = new SudokuResolver(new Semaphore(1), sudokuPane);
+        System.out.println(sudokuResolver.getSimpleSudokuState());
+        System.out.println(sudokuResolver.getComplexSudokuState());
+        System.out.println(sudokuResolver.getComplexSudokuStateFormatted());
+        System.out.println(sudokuResolver.getUserSudokuInputMatrixState());
 
-        SudokuResolver sr = new SudokuResolver(new Semaphore(1));
-        System.out.println(sr.getSimpleSudokuState());
-        System.out.println(sr.getComplexSudokuState());
-        System.out.println(sr.getComplexSudokuStateFormatted());
-        System.out.println(sr.getUserSudokuInputMatrixState());
+    }
 
+    @FXML
+    private void onResolve(MouseEvent event) {
+        boolean isValidSudoku = sudokuResolver.getMatrixView().isValidSudoku();
+        if (isValidSudoku) {
+            //resolve the matrix here!
+            //start resolving it (set the boolean matrix and input values
+        } else {
+            //reset the whole matrix view
+            sudokuResolver.getMatrixView().initTextBoxesMatrix();
+            /*
+            If there's time, an upgrade when an input is invalid:
+            
+            TODO:
+            For each wrong input color in red the text and disable the button,
+            this will just avoid user to insert invalid inputs and set the
+            resolve button
+             */
+        }
     }
 
 }

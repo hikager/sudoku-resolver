@@ -100,9 +100,9 @@ public class SubMatrixView {
 
                 TextField txtF = new TextField("" + 0);
                 subMatrix[i][j] = setProperties(i, j, posX, posY);
-                posX += lenX-30;//j * offsetX;
+                posX += lenX - 30;//j * offsetX;
             }
-            posY += lenY-20;
+            posY += lenY - 20;
         }
 
         System.out.println("Submatrix created!");
@@ -124,10 +124,10 @@ public class SubMatrixView {
         System.out.println("J=" + j);
         // posY = positionY + j * offsetY;
 
-        TextField txtF = new TextField("" + 0);
+        TextField txtF = new TextField("-");
         txtF.setStyle("-fx-font-size:15px;");
         //id format : textInput_rowNumber_colNumber
-        txtF.setId("textInput_" + i + "_" + j);
+        txtF.setId("textInput Sub-Matrix-pos [" + i + "," + j + "] and Matrix cell: [" + offsetX + "," + offsetY + "]");
         System.out.printf("New textBox at (%f,%f) with id: %s\n", posX, posY, "textInput_" + offsetX + "_" + offsetY + "_" + i + "_" + j);
 
         txtF.setLayoutX(posX);

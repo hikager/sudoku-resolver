@@ -8,6 +8,7 @@ package model.viewsudoku;
 import java.util.concurrent.Semaphore;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import model.PopUpMSG;
 
 /**
  *
@@ -17,6 +18,7 @@ public class MatrixView {
     //Si es modifiquès el Pane aquest hauria de
     //canviarlo manualment
 
+    private PopUpMSG popUpMSG;
     /**
      * Matrix wrapper for each text-field which is created from
      * initTextBoxesMatrix
@@ -93,17 +95,25 @@ public class MatrixView {
      */
     private Semaphore semaphore;
 
+    /**
+     * If the matrix view is already initialized
+     */
+    private boolean isIniti = false;
+    
     public MatrixView(AnchorPane sudokuPane) {
         this.sudokuPane = sudokuPane;
         matrixView = new TextField[LENGTH][LENGTH][LENGTH][LENGTH];
         semaphore = new Semaphore(1);
-
+        popUpMSG = new PopUpMSG();
+        
     }
-
+    
     public MatrixView(AnchorPane sudokuPane, int semaphoreSlotLimit) {
         this.sudokuPane = sudokuPane;
         matrixView = new TextField[LENGTH][LENGTH][LENGTH][LENGTH];
         semaphore = new Semaphore(semaphoreSlotLimit);
+        popUpMSG = new PopUpMSG();
+        
     }
 
     /**
@@ -147,31 +157,31 @@ public class MatrixView {
      *
      * <br>
      * <br>
-     *  2. Once the  subMatrixViewClass.getSubMatrix() makes the sub-matrix
-     * we add it to the Matrix matrixView
-     * 
+     * 2. Once the subMatrixViewClass.getSubMatrix() makes the sub-matrix we add
+     * it to the Matrix matrixView
+     *
      * <br>
      * <br>
-     * 
+     *
      * matrixView [rowA][colA][rowAA][colAA] => multidimensional matrix.<br>
-     * 
+     *
      * <ul>
      * <li>rowA-> matrixView ROW</li>
      * <li>colA-> matrixView COLUMN</li>
      * <li>rowAA-> sub-matrix index for its ROW</li>
      * <li>colAA-> sub-matrix index for its COLUMNS</li>
      * </ul>
-     * 
-     * 
+     *
+     *
      * @see model.viewsudoku.SubMatrixView
      */
     public void initTextBoxesMatrix() {
-
+        
         double posY = 20;
         for (int i = 0; i < LENGTH; i++) {
             System.out.println("Row number: " + (i + 1));
             double posX = 35;
-
+            
             for (int j = 0; j < LENGTH; j++) {
                 //posX = lenX * i + 35;
                 this.subMatrixViewClass
@@ -179,54 +189,106 @@ public class MatrixView {
                                 posX, posY,
                                 lenX / LENGTH, lenY / LENGTH,
                                 i, j);
-
+                
                 this.matrixView[i][j] = subMatrixViewClass.getSubMatrix();
                 posX += lenX;
             }
             posY += lenY;
             System.out.println("");
         }
+        this.isIniti = true;
         System.out.println("\nMatrix of text-boxes generated in the view...");
     }
 
+    
+    /**
+     * It checks whether the inputs from the user are valid (non-numbers,
+     * spaces, empty, negative values...)
+     *
+     * @return If the user inputs are valid before solving the Sudoku
+     */
+    public boolean isValidSudoku() {
+        boolean isValid = false;
+        if (this.isIniti) {
+            isValid = isValidMatrix();
+        }
+        return isValid;
+    }
+
+    /**
+     * It checks the view matrix, element by element.
+     *
+     * @return
+     */
+    private boolean isValidMatrix() {
+        boolean isValidMatrix = true;
+        for (int row = 0; row < LENGTH; row++) {
+            for (int col = 0; col < LENGTH; col++) {
+                for (int subRow = 0; subRow < LENGTH; subRow++) {
+                    for (int subCol = 0; subCol < LENGTH; subCol++) {
+                        String inputText = this.matrixView[row][col][subRow][subCol].getText();
+                        //Those textfield with "-" were inserted while the initialition
+                        //so we need to ignored when we check the input values
+                        if (!inputText.equals("-")) {
+                            if (!(inputText != null
+                                    && inputText.length() > 0
+                                    && inputText.matches("[1-9]"))) {
+                                popUpMSG.setError(inputText + " is not a valid number for a Sudoku!\n"
+                                        + "this Sudoku will be reset!");
+                                popUpMSG.errorMSG();
+                                System.out.println("<" + inputText + "> is not a valid number for a Sudoku!\n "
+                                        + " The first error were found in"
+                                        + this.matrixView[row][col][subRow][subCol].getId());
+                                return isValidMatrix = false;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        System.out.println("VALID");
+        return isValidMatrix;
+    }
+    
     public TextField[][][][] getMatrixView() {
         return matrixView;
     }
-
+    
     public void setMatrixView(TextField[][][][] matrixView) {
         this.matrixView = matrixView;
     }
-
+    
     public SubMatrixView getSubMatrixViewClass() {
         return subMatrixViewClass;
     }
-
+    
     public void setSubMatrixViewClass(SubMatrixView subMatrixViewClass) {
         this.subMatrixViewClass = subMatrixViewClass;
     }
-
+    
     public TextField[][] getTextFMatrix() {
         return textFMatrix;
     }
-
+    
     public void setTextFMatrix(TextField[][] textFMatrix) {
         this.textFMatrix = textFMatrix;
     }
-
+    
     public AnchorPane getSudokuPane() {
         return sudokuPane;
     }
-
+    
     public void setSudokuPane(AnchorPane sudokuPane) {
         this.sudokuPane = sudokuPane;
     }
-
+    
     public Semaphore getSemaphore() {
         return semaphore;
     }
-
+    
     public void setSemaphore(Semaphore semaphore) {
         this.semaphore = semaphore;
     }
-
+    
 }

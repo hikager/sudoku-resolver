@@ -1,6 +1,7 @@
 package model;
 
 import java.util.concurrent.Semaphore;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * This class extends from Sudoku and it inherits both the Sudoku matrix and
@@ -49,19 +50,19 @@ public class SudokuResolver extends Sudoku {
 
     private Semaphore semaphore;
 
-    public SudokuResolver(int rowLen, int colLen, Semaphore semaphore) {
-        super(rowLen, colLen, true);
+    public SudokuResolver(int rowLen, int colLen, Semaphore semaphore, AnchorPane sudokuPane) {
+        super(rowLen, colLen, true, sudokuPane);
         this.semaphore = semaphore;
 
     }
 
     /**
-     * Default constructor for Sudoku 3x3 of matrices 3z3
+     * Default constructor for Sudoku 3x3 of matrices 3x3
      *
      * @param semaphore to handle the threads for the resolving.
      */
-    public SudokuResolver(Semaphore semaphore) {
-        super(3, 3, false);
+    public SudokuResolver(Semaphore semaphore, AnchorPane sudokuPane) {
+        super(3, 3, false, sudokuPane);
         this.semaphore = semaphore;
     }
 
@@ -71,4 +72,14 @@ public class SudokuResolver extends Sudoku {
     }
 
     //TODO Esta classe es quien "manage" la resolucion (esta inicia los hilos y demas)
+    /**
+     * It check whether the a matrix is valid for the Sudoku or not. (Integer
+     * matrix)
+     *
+     * @return Whether a matrix is a valid Sudoku
+     */
+    public boolean isValidSudoku() {
+        return false;
+    }
+
 }
