@@ -67,22 +67,7 @@ public class sudokuController implements Initializable {
 
     @FXML
     private void onResolve(MouseEvent event) {
-        boolean isValidSudoku = sudokuResolver.getMatrixView().isValidSudoku();
-        if (isValidSudoku) {
-            //resolve the matrix here!
-            //start resolving it (set the boolean matrix and input values
-        } else {
-            //reset the whole matrix view
-            sudokuResolver.getMatrixView().initTextBoxesMatrix();
-            /*
-            If there's time, an upgrade when an input is invalid:
-            
-            TODO:
-            For each wrong input color in red the text and disable the button,
-            this will just avoid user to insert invalid inputs and set the
-            resolve button
-             */
-        }
+       sudokuResolver.startResolving();
     }
 
 }

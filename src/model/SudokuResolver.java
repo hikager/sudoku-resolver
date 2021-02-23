@@ -78,8 +78,39 @@ public class SudokuResolver extends Sudoku {
      *
      * @return Whether a matrix is a valid Sudoku
      */
-    public boolean isValidSudoku() {
-        return false;
+    public void startResolving() {
+        boolean isValidSudoku = getMatrixView().isValidSudoku();
+        if (isValidSudoku) {
+            //resolve the matrix here!
+            //start resolving it (set the boolean matrix and input values
+            prepareMatrices();
+            //method to start the calculus/resolving-part
+        } else {
+            //reset the whole matrix view
+            getMatrixView().initTextBoxesMatrix();
+            /*
+            If there's time, an upgrade when an input is invalid:
+            
+            TODO:
+            For each wrong input color in red the text and disable the button,
+            this will just avoid user to insert invalid inputs and set the
+            resolve button
+             */
+        }
+    }
+
+    /**
+     * It sets up the Boolean matrix and integer.
+     *
+     * In Boolean matrix it will set true to those input values where user
+     * inserted
+     *
+     * In integer matrix the values from the text-field to its mirror position
+     * (same matrix pos)
+     */
+    private void prepareMatrices() {
+        //method to fill boolean matrix
+        //method to fill integer matrix
     }
 
 }

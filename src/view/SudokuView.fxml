@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" fx:id="MainPain" focusTraversable="true" prefHeight="648.0" prefWidth="1146.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.sudokuController">
    <children>
@@ -14,6 +15,7 @@
             <Font name="Monospaced Italic" size="19.0" />
          </font>
       </Button>
+      <Text layoutX="408.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add some values to the sudoku before you click on the button" />
       
    </children>
 </AnchorPane>
