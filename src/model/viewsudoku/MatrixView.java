@@ -18,6 +18,8 @@ public class MatrixView {
     //Si es modifiquès el Pane aquest hauria de
     //canviarlo manualment
 
+    private int checkedNumbers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+
     private PopUpMSG popUpMSG;
     /**
      * Matrix wrapper for each text-field which is created from
@@ -305,7 +307,7 @@ public class MatrixView {
     private boolean hasValidNumbers(int row, int col, int rowSub, int colSub) {
         return checkOnRowsConstant(row, rowSub)
                 && checkOnColumnsConstant(col, colSub)
-                && checkOnSubmatrix(row, col, rowSub, colSub);
+                && checkOnSubmatrix(row, col);
     }
 
     /**
@@ -323,8 +325,9 @@ public class MatrixView {
      * @return Whether it has repeated numbers (false) or not (true)
      */
     private boolean checkOnRowsConstant(int rowCt, int rowSubCt) {
+        System.out.printf("\nChecking row [%d] and subRow[%d] \n", rowCt, rowSubCt);
         boolean noRepetitions = true;
-        int checkedNumbers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        resetCheckArray();
         int colCount = 0;
         //  for (int row = 0; row < LENGTH; row++) {
         for (int col = 0; col < LENGTH; col++) {
@@ -332,7 +335,7 @@ public class MatrixView {
             for (int subCol = 0; subCol < LENGTH; subCol++) {
                 String inputStrNumber
                         = this.matrixView[rowCt][col][rowSubCt][subCol].getText();
-                System.out.println(inputStrNumber);
+                // System.out.println(inputStrNumber);
                 //check if a number is repeated
 
                 if (!inputStrNumber.equals("-") && inputStrNumber.length() > 0
@@ -347,14 +350,16 @@ public class MatrixView {
                         }
                     }
                     checkedNumbers[colCount] = number;
+                    printCheckArray();
                     ++colCount;
                 }
 
             }
-            System.out.println("");
+            //System.out.println("");
             //}
         }
         //  }
+        System.out.printf("\nValid numbers in both  row [%d] and subRow [%d] \n\n", rowCt, rowSubCt);
         return noRepetitions;
     }
 
@@ -373,8 +378,9 @@ public class MatrixView {
      * @return Whether it has repeated numbers (false) or not (true)in columns
      */
     private boolean checkOnColumnsConstant(int colCt, int SubcolCt) {
+        System.out.printf("\nChecking col [%d] and subCol[%d] \n", colCt, SubcolCt);
         boolean noRepetitions = true;
-        int checkedNumbers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        resetCheckArray();
         int colCount = 0;
 
         for (int row = 0; row < LENGTH; row++) {
@@ -382,7 +388,7 @@ public class MatrixView {
             for (int subRow = 0; subRow < LENGTH; subRow++) {
                 String inputStrNumber
                         = this.matrixView[row][colCt][subRow][SubcolCt].getText();
-                System.out.println(inputStrNumber);
+                //System.out.println(inputStrNumber);
                 //check if a number is repeated
                 if (!inputStrNumber.equals("-")
                         && inputStrNumber.length() > 0
@@ -390,25 +396,111 @@ public class MatrixView {
 
                     int number = Integer.parseInt(inputStrNumber);
 
-                    for (int i = 0; i < LENGTH * LENGTH; i++) {
-                        if (checkedNumbers[i] == number) {
-
-                            System.out.println("rep!: " + number);
-                            return noRepetitions = false;
-                        }
+                    if (isRepeated(number)) {
+                        return noRepetitions = false;
                     }
                     checkedNumbers[colCount] = number;
+                    printCheckArray();
                     ++colCount;
                 }
             }
-            System.out.println("");
+            // System.out.println("");
         }
-
+        System.out.printf("\nValid numbers in both  col  [%d] and subCol [%d] \n\n", colCt, SubcolCt);
         return noRepetitions;
     }
 
-    private boolean checkOnSubmatrix(int row, int col, int rowSub, int colSub) {
-        return true;
+    /**
+     * It checks on the matrixView one subMatrix (a 3x3 field within MatrixView)
+     *
+     * This method iterates over the matrixView with a constant value of columns
+     * and rows because if we check all the subMatrices it will be too much
+     * calculus.
+     *
+     * For this reason, It is only checked one SubMatrix at a time
+     *
+     *
+     * @param rowCt Matrix row position (Sudoku matrix)
+     * @param colCt Matrix column position (Sudoku matrix)
+     * @return If the subMatrix has or not repeated numbers
+     */
+    private boolean checkOnSubmatrix(int rowCt, int colCt) {
+        System.out.printf("\nChecking submatrix [%d,%d] \n", rowCt, colCt);
+        boolean noRepetitions = true;
+        resetCheckArray();
+        int colCount = 0;
+        for (int subRow = 0; subRow < LENGTH; subRow++) {
+            for (int subCol = 0; subCol < LENGTH; subCol++) {
+                String inputStrNumber
+                        = this.matrixView[rowCt][colCt][subRow][subCol].getText();
+                //System.out.println(inputStrNumber);
+                //check if a number is repeated
+                if (!inputStrNumber.equals("-")
+                        && inputStrNumber.length() > 0
+                        && inputStrNumber.matches("[1-9]")) {
+
+                    int number = Integer.parseInt(inputStrNumber);
+
+                    if (isRepeated(number)) {
+                        printCheckArray();
+                        System.out.println("submatrix-check-repeated-found: " + number);
+                        System.out.println("position: " + this.matrixView[rowCt][colCt][subRow][colCt].getId());
+                        return noRepetitions = false;
+                    }
+
+                    checkedNumbers[colCount] = number;
+                    printCheckArray();
+                    ++colCount;
+                }
+            }
+        }
+        System.out.printf("\nValid numbers in subMatrix [%d,%d] \n\n", rowCt, colCt);
+        return noRepetitions;
+    }
+
+    /**
+     * Check from an array whether a number is repeated or not.
+     *
+     * Goal: This method goes along checking the input values from matrixView.
+     *
+     *
+     * @param number The integer number to be checked
+     * @return if there's some repeated number
+     */
+    private boolean isRepeated(int number) {
+        boolean isRepeated = false;
+        for (int i = 0; i < LENGTH * LENGTH; i++) {
+            if (checkedNumbers[i] == number) {
+                System.out.println("rep!: " + number);
+                return isRepeated = true;
+            }
+        }
+        return isRepeated;
+    }
+
+    private void printCheckArray() {
+        int totalLen = LENGTH * LENGTH;
+        System.out.printf("-Array-Cheking-State: [");
+        for (int i = 0; i < totalLen; i++) {
+            if (i < totalLen - 1) {
+                System.out.printf("%d, ", this.checkedNumbers[i]);
+            } else {
+                System.out.printf("%d] ", this.checkedNumbers[i]);
+            }
+        }
+        System.out.println("");
+    }
+
+    /**
+     * Reset the checking array to 0.
+     *
+     * Why: Because when a checking field is ended and start another, we need to
+     * clean the numbers used previously.
+     */
+    private void resetCheckArray() {
+        for (int i = 0; i < LENGTH * LENGTH; i++) {
+            this.checkedNumbers[i] = 0;
+        }
     }
 
     public TextField[][][][] getMatrixView() {
