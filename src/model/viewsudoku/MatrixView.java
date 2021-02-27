@@ -271,9 +271,9 @@ public class MatrixView {
                                  * times the same row!!)
                                  */
                                 hasValidNumber = hasValidNumbers(row, col, subRow, subCol);
-                                 System.out.println("hasValidNumber:: "+hasValidNumber);
+
                                 if (!hasValidNumber) {
-                                   
+
                                     return hasValidNumber;
                                 }
                             }
@@ -304,10 +304,24 @@ public class MatrixView {
      */
     private boolean hasValidNumbers(int row, int col, int rowSub, int colSub) {
         return checkOnRowsConstant(row, rowSub)
-                && checkOnColumnsConstant(row, col, rowSub, colSub)
+                && checkOnColumnsConstant(col, colSub)
                 && checkOnSubmatrix(row, col, rowSub, colSub);
     }
 
+    /**
+     * It checks on the matrixView each row whether it has repeated numbers
+     *
+     * This method iterates over the matrixView with a constant value of rows
+     * because if we check all the matrix it will be too much calculus.
+     *
+     * For this reason, It is only checked those columns which affects a
+     * collision or could have a repeated number (Understanding Sudoku's rules)
+     *
+     * @param rowCt a constant value for Matrix rows
+     *
+     * @param rowSubCt a constant value for SubMatrix rows
+     * @return Whether it has repeated numbers (false) or not (true)
+     */
     private boolean checkOnRowsConstant(int rowCt, int rowSubCt) {
         boolean noRepetitions = true;
         int checkedNumbers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -316,7 +330,8 @@ public class MatrixView {
         for (int col = 0; col < LENGTH; col++) {
             // for (int subRow = 0; subRow < LENGTH; subRow++) {
             for (int subCol = 0; subCol < LENGTH; subCol++) {
-                String inputStrNumber = this.matrixView[rowCt][col][rowSubCt][subCol].getText();
+                String inputStrNumber
+                        = this.matrixView[rowCt][col][rowSubCt][subCol].getText();
                 System.out.println(inputStrNumber);
                 //check if a number is repeated
 
@@ -326,7 +341,7 @@ public class MatrixView {
 
                     for (int i = 0; i < LENGTH * LENGTH; i++) {
                         if (checkedNumbers[i] == number) {
-                            //return false;
+
                             System.out.println("rep!: " + number);
                             return noRepetitions = false;
                         }
@@ -343,8 +358,53 @@ public class MatrixView {
         return noRepetitions;
     }
 
-    private boolean checkOnColumnsConstant(int row, int col, int rowSub, int colSub) {
-        return true;
+    /**
+     * It checks on the matrixView each column whether it has repeated numbers.
+     *
+     * This method iterates over the matrixView with a constant value of columns
+     * because if we check all the matrix it will be too much calculus.
+     *
+     * For this reason, It is only checked those columns which affects a
+     * collision or could have a repeated number (Understanding Sudoku's rules)
+     *
+     *
+     * @param colCt a constant value for Matrix columns
+     * @param SubcolCt a constant value for SubMatrix columns
+     * @return Whether it has repeated numbers (false) or not (true)in columns
+     */
+    private boolean checkOnColumnsConstant(int colCt, int SubcolCt) {
+        boolean noRepetitions = true;
+        int checkedNumbers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int colCount = 0;
+
+        for (int row = 0; row < LENGTH; row++) {
+
+            for (int subRow = 0; subRow < LENGTH; subRow++) {
+                String inputStrNumber
+                        = this.matrixView[row][colCt][subRow][SubcolCt].getText();
+                System.out.println(inputStrNumber);
+                //check if a number is repeated
+                if (!inputStrNumber.equals("-")
+                        && inputStrNumber.length() > 0
+                        && inputStrNumber.matches("[1-9]")) {
+
+                    int number = Integer.parseInt(inputStrNumber);
+
+                    for (int i = 0; i < LENGTH * LENGTH; i++) {
+                        if (checkedNumbers[i] == number) {
+
+                            System.out.println("rep!: " + number);
+                            return noRepetitions = false;
+                        }
+                    }
+                    checkedNumbers[colCount] = number;
+                    ++colCount;
+                }
+            }
+            System.out.println("");
+        }
+
+        return noRepetitions;
     }
 
     private boolean checkOnSubmatrix(int row, int col, int rowSub, int colSub) {
