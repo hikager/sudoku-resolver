@@ -87,6 +87,7 @@ public class SudokuResolver extends Sudoku {
             //resolve the matrix here!
             //start resolving it (set the boolean matrix and input values
             prepareMatrices();
+
             //method to start the calculus/resolving-part
         } else {
             //We warn the user he/she just inserted numbers on invalid position
@@ -116,8 +117,12 @@ public class SudokuResolver extends Sudoku {
      * (same matrix pos)
      */
     private void prepareMatrices() {
-        //method to fill boolean matrix
         //method to fill integer matrix
+        System.out.println("Importing numbers....");
+        importSudoku();
+        //method to fill boolean matrix
+        System.out.println("Setting up fixed values...");
+        importBooleanSudoku();
     }
 
 }

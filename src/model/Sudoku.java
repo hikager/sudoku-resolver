@@ -271,4 +271,55 @@ public abstract class Sudoku {
         sb.append("------------------------------------------");
         return sb.toString();
     }
+
+    /**
+     * Retrieve all the numbers from a textField Matrix(matrixView) for a Sudoku
+     * into the complexSudokuM (parse the text into Integers)
+     */
+    public void importSudoku() {
+        for (int row = 0; row < ROW_LENTGH; row++) {
+            for (int col = 0; col < COL_LENTGH; col++) {
+                for (int rowSubMatrix = 0; rowSubMatrix < ROW_LENTGH; rowSubMatrix++) {
+                    for (int colSubMatrix = 0; colSubMatrix < ROW_LENTGH; colSubMatrix++) {
+                        String inputNumberTxt
+                                = this.matrixView.getMatrixView()[row][col][rowSubMatrix][colSubMatrix].getText();
+                        //Where the "-" is we just ignore because the integer
+                        //matrix is already init with 0 all the matrix values
+                        if (!inputNumberTxt.equals("-")) {
+                            complexSudokuM[row][col][rowSubMatrix][colSubMatrix]
+                                    = Integer.parseInt(inputNumberTxt);
+                        }
+                    }
+                }
+            }
+
+        }
+        System.out.println(getComplexSudokuStateFormatted());
+
+    }
+
+    /**
+     * It reads all the numbers and where the user inserted a number it will
+     * load into the Boolean matrix as a true to set a Fixed value when the
+     * resolving part start.
+     */
+    public void importBooleanSudoku() {
+        for (int row = 0; row < ROW_LENTGH; row++) {
+            for (int col = 0; col < COL_LENTGH; col++) {
+                for (int rowSubMatrix = 0; rowSubMatrix < ROW_LENTGH; rowSubMatrix++) {
+                    for (int colSubMatrix = 0; colSubMatrix < ROW_LENTGH; colSubMatrix++) {
+                        String inputNumberTxt
+                                = this.matrixView.getMatrixView()[row][col][rowSubMatrix][colSubMatrix].getText();
+                        //Where the "-" is we just ignore because the integer
+                        //matrix is already init with False all the matrix values
+                        if (!inputNumberTxt.equals("-")) {
+                            sudokuUserInputsM[row][col][rowSubMatrix][colSubMatrix]
+                                    = true;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(getUserSudokuInputMatrixState());
+    }
 }
