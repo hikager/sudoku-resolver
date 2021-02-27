@@ -271,7 +271,9 @@ public class MatrixView {
                                  * times the same row!!)
                                  */
                                 hasValidNumber = hasValidNumbers(row, col, subRow, subCol);
+                                 System.out.println("hasValidNumber:: "+hasValidNumber);
                                 if (!hasValidNumber) {
+                                   
                                     return hasValidNumber;
                                 }
                             }
@@ -307,6 +309,7 @@ public class MatrixView {
     }
 
     private boolean checkOnRowsConstant(int rowCt, int rowSubCt) {
+        boolean noRepetitions = true;
         int checkedNumbers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
         int colCount = 0;
         //  for (int row = 0; row < LENGTH; row++) {
@@ -325,6 +328,7 @@ public class MatrixView {
                         if (checkedNumbers[i] == number) {
                             //return false;
                             System.out.println("rep!: " + number);
+                            return noRepetitions = false;
                         }
                     }
                     checkedNumbers[colCount] = number;
@@ -336,7 +340,7 @@ public class MatrixView {
             //}
         }
         //  }
-        return true;
+        return noRepetitions;
     }
 
     private boolean checkOnColumnsConstant(int row, int col, int rowSub, int colSub) {

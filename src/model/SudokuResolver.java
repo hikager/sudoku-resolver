@@ -48,6 +48,7 @@ import javafx.scene.layout.AnchorPane;
  */
 public class SudokuResolver extends Sudoku {
 
+    private PopUpMSG popUpMSG;
     private Semaphore semaphore;
 
     public SudokuResolver(int rowLen, int colLen, Semaphore semaphore, AnchorPane sudokuPane) {
@@ -64,10 +65,12 @@ public class SudokuResolver extends Sudoku {
     public SudokuResolver(Semaphore semaphore, AnchorPane sudokuPane) {
         super(3, 3, false, sudokuPane);
         this.semaphore = semaphore;
+        popUpMSG = new PopUpMSG();
     }
 
     public SudokuResolver() {
         super();
+        popUpMSG = new PopUpMSG();
 
     }
 
@@ -86,6 +89,10 @@ public class SudokuResolver extends Sudoku {
             prepareMatrices();
             //method to start the calculus/resolving-part
         } else {
+            //We warn the user he/she just inserted numbers on invalid position
+            popUpMSG.setError("This is not a valid Saudoku to resolve...\n"
+                    + "It's going to clean the Sudoku!!!");
+            popUpMSG.errorMSG();
             //reset the whole matrix view
             getMatrixView().initTextBoxesMatrix();
             /*
