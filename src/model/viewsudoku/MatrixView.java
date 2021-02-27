@@ -18,8 +18,14 @@ public class MatrixView {
     //Si es modifiquès el Pane aquest hauria de
     //canviarlo manualment
 
+    /**
+     * Array for storing valid numbers while checking the Sudoku
+     */
     private int checkedNumbers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+    /**
+     * To show up a pop up message
+     */
     private PopUpMSG popUpMSG;
     /**
      * Matrix wrapper for each text-field which is created from
@@ -478,6 +484,9 @@ public class MatrixView {
         return isRepeated;
     }
 
+    /**
+     * It shows up pretty the array-state for each Sudoku's field check
+     */
     private void printCheckArray() {
         int totalLen = LENGTH * LENGTH;
         System.out.printf("-Array-Cheking-State: [");

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -13,6 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @see
+ * <a href="https://github.com/hikager/sudoku-resolver/commits?author=hikager">Registre
+ * de commits</a>
+ * 
+ * @author Luis ML
+ */
 public class Main extends Application {
 
     @Override
