@@ -85,7 +85,7 @@ public class SudokuResolver extends Sudoku {
         boolean isValidSudoku = getMatrixView().isValidSudoku();
         if (isValidSudoku) {
             //resolve the matrix here!
-            //start resolving it (set the boolean matrix and input values
+            //start filling matrices (set the boolean matrix and input values
             prepareMatrices();
 
             //method to start the calculus/resolving-part
