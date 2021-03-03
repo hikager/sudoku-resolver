@@ -1,6 +1,9 @@
 package model;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -48,8 +51,11 @@ import javafx.scene.layout.AnchorPane;
  */
 public class SudokuResolver extends Sudoku {
 
+    private SudokuResolverSubMatrix[] subMatrixRunnables = new SudokuResolverSubMatrix[9];
+    private Thread[] subMatricesTh = new Thread[9];
     private PopUpMSG popUpMSG;
     private Semaphore semaphore;
+    private AtomicBoolean insertAgain = new AtomicBoolean(false);
 
     public SudokuResolver(int rowLen, int colLen, Semaphore semaphore, AnchorPane sudokuPane) {
         super(rowLen, colLen, true, sudokuPane);
@@ -88,6 +94,7 @@ public class SudokuResolver extends Sudoku {
             //start filling matrices (set the boolean matrix and input values
             prepareMatrices();
 
+            start();
             //method to start the calculus/resolving-part
         } else {
             //We warn the user he/she just inserted numbers on invalid position
@@ -123,6 +130,107 @@ public class SudokuResolver extends Sudoku {
         //method to fill boolean matrix
         System.out.println("Setting up fixed values...");
         importBooleanSudoku();
+    }
+
+    /**
+     * It creates an array of threads to store each runnable of the sub-matrix
+     * resolver object.
+     */
+    private void initSubMatricesThreads() {
+        int len = super.getMatrixView().LENGTH;
+        int th = 0;
+        //int totalLen = len * len;
+        for (int row = 0; row < len; row++) {
+            for (int col = 0; col < len; col++) {
+                subMatrixRunnables[th]
+                        = new SudokuResolverSubMatrix(this.getComplexSudokuM()[row][col],
+                                this.getSudokuUserInputsM()[row][col],
+                                row,
+                                col,
+                                this.semaphore,
+                                "subMatrix[" + row + "," + col + "]",
+                                insertAgain,
+                                this.getComplexSudokuM());
+                try {
+
+                    /* System.out.println(subMatrixRunnables[th].getSubMatrixName());
+                    this.subMatricesTh[th] = new Thread(
+                            subMatrixRunnables[th],
+                            subMatrixRunnables[th].getSubMatrixName());*/
+                    ++th;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+    }
+
+    /**
+     * It starts each thread from sub-matrix array
+     */
+    private void startSubMatricesThreads() {
+        int len = super.getMatrixView().LENGTH;
+        System.out.println("----------------------------");
+        for (int i = 0; i < len * len; i++) {
+            subMatrixRunnables[i].start();
+            System.out.println("thread starting... " + subMatrixRunnables[i].getName());
+        }
+        System.out.println("----------------------------");
+    }
+
+    private void checkSudoku() {
+        while (true) {
+            try {
+                Thread.sleep(1000);
+
+                this.semaphore.acquire();
+                System.out.println("Check sudoku state on resolving:");
+                System.out.println(this.getComplexSudokuStateFormatted());
+                this.semaphore.release();
+                restartSubMatricesThreads();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SudokuResolver.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void start() {
+        initSubMatricesThreads();
+        startSubMatricesThreads();
+        checkSudoku();
+    }
+
+    private void restartSubMatricesThreads() {
+        int len = super.getMatrixView().LENGTH;
+        for (int i = 0; i < len * len; i++) {
+            this.subMatrixRunnables[i].canInsertAgain = true;
+            System.out.println("thread starting... "
+                    + this.subMatrixRunnables[i].getSubMatrixName());
+        }
+    }
+
+    private void checkCurrentMatrix() {
+
+    }
+
+    private boolean hasValidNumbers(int row, int col, int rowSub, int colSub) {
+        return checkOnRowsConstant(row, rowSub)
+                && checkOnColumnsConstant(col, colSub)
+                && checkOnSubmatrix(row, col);
+    }
+
+    private boolean checkOnRowsConstant(int ctRow, int ctSubRow) {
+        return true;
+    }
+
+    private boolean checkOnColumnsConstant(int ctCol, int ctSubCol) {
+        return true;
+    }
+
+    private boolean checkOnSubmatrix(int ctRow, int ctCol) {
+        return true;
     }
 
 }
