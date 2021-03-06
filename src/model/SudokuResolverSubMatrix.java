@@ -95,16 +95,18 @@ public class SudokuResolverSubMatrix extends Thread {
         while (running.get()) {
             try {
                 System.out.println("len: " + semaphore.getQueueLength());
+                System.out.println("PAUSED: " + subMatrixName);
                 semaphore.acquire();
+                System.out.println("KEEP WORKING: " + subMatrixName);
                 //Thread.sleep(1000);
                 addingNumber();
 
-                // while (!canInsertAgain) {
-                //This removes a bug I cannot solve yet
-                semaphore.release();
+                while (!canInsertAgain) {
+                    //This removes a bug I cannot solve yet
+                    semaphore.release();
 
-                //}
-                // System.out.println(this.subMatrixName + " -  is free");
+                }
+                System.out.println(this.subMatrixName + " -  is free");
             } catch (InterruptedException ex) {
                 System.out.println("SudokuResolverSubMatrix.class - run()");
                 Logger.getLogger(SudokuResolverSubMatrix.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,7 +123,7 @@ public class SudokuResolverSubMatrix extends Thread {
 
             int subMatrixRow = ThreadLocalRandom.current().nextInt(0, 3);
             int subMatrixCol = ThreadLocalRandom.current().nextInt(0, 3);
-            System.out.println("num=" + randomNum + ", subMRow=" + subMatrixRow + ", subMCol" + subMatrixCol);
+            System.out.println("num=" + randomNum + ", subMRow=" + subMatrixRow + ", subMCol=" + subMatrixCol);
             //Check if the number is valid in its position (in the sudoku)
             if (checkValidNumber(randomNum, subMatrixRow, subMatrixCol)) {
                 System.out.println("valid!");
@@ -163,22 +165,22 @@ public class SudokuResolverSubMatrix extends Thread {
         for (int col = 0; col < LENGTH; col++) {
             for (int subCol = 0; subCol < LENGTH; subCol++) {
                 int num = this.matrixSudoku[ctRow][col][ctSubRow][subCol];
-                // if (num != 0) {
-                if (num == numberToCheck) {
+                if (num != 0) {
+                    if (num == numberToCheck) {
+                        printCheckArray();
+                        System.out.printf(
+                                "Thread (%s) found repeated number: %d\n",
+                                this.getSubMatrixName(), num);
+                        System.out.printf(
+                                "position: mat[%d][%d]-sub[%d][%d]\n",
+                                ctRow, col, ctSubRow, subCol);
+                        return noRepetitions = false;
+                    }
+                    System.out.println("adddN");
+                    checkedNumbers[colCount] = num;
                     printCheckArray();
-                    System.out.printf(
-                            "Thread (%s) found repeated number: %d\n",
-                            this.getSubMatrixName(), num);
-                    System.out.printf(
-                            "position: mat[%d][%d]-sub[%d][%d]\n",
-                            ctRow, col, ctSubRow, subCol);
-                    return noRepetitions = false;
+                    ++colCount;
                 }
-                System.out.println("adddN");
-                checkedNumbers[colCount] = num;
-                printCheckArray();
-                ++colCount;
-                //}
 
             }
         }
@@ -193,21 +195,21 @@ public class SudokuResolverSubMatrix extends Thread {
         for (int row = 0; row < LENGTH; row++) {
             for (int subRow = 0; subRow < LENGTH; subRow++) {
                 int num = this.matrixSudoku[row][ctCol][subRow][ctSubCol];
-                //    if (num != 0) {
-                if (num == numberToCheck) {
+                if (num != 0) {
+                    if (num == numberToCheck) {
+                        printCheckArray();
+                        System.out.printf(
+                                "Thread (%s) found repeated number: %d\n",
+                                this.getSubMatrixName(), num);
+                        System.out.printf(
+                                "position: mat[%d][%d]-sub[%d][%d]\n",
+                                row, ctCol, subRow, ctSubCol);
+                        return noRepetitions = false;
+                    }
+                    checkedNumbers[colCount] = num;
                     printCheckArray();
-                    System.out.printf(
-                            "Thread (%s) found repeated number: %d\n",
-                            this.getSubMatrixName(), num);
-                    System.out.printf(
-                            "position: mat[%d][%d]-sub[%d][%d]\n",
-                            row, ctCol, subRow, ctSubCol);
-                    return noRepetitions = false;
+                    ++colCount;
                 }
-                checkedNumbers[colCount] = num;
-                printCheckArray();
-                ++colCount;
-                //       }
             }
         }
         return noRepetitions;
@@ -221,21 +223,21 @@ public class SudokuResolverSubMatrix extends Thread {
         for (int subRow = 0; subRow < LENGTH; subRow++) {
             for (int subCol = 0; subCol < LENGTH; subCol++) {
                 int num = this.matrixSudoku[ctRow][ctCol][subRow][subCol];
-                //   if (num != 0) {
-                if (num == numberToCheck) {
+                if (num != 0) {
+                    if (num == numberToCheck) {
+                        printCheckArray();
+                        System.out.printf(
+                                "Thread (%s) found repeated number: %d\n",
+                                this.getSubMatrixName(), num);
+                        System.out.printf(
+                                "position: mat[%d][%d]-sub[%d][%d]\n",
+                                ctRow, ctCol, subRow, subCol);
+                        return noRepetitions = false;
+                    }
+                    checkedNumbers[colCount] = num;
                     printCheckArray();
-                    System.out.printf(
-                            "Thread (%s) found repeated number: %d\n",
-                            this.getSubMatrixName(), num);
-                    System.out.printf(
-                            "position: mat[%d][%d]-sub[%d][%d]\n",
-                            ctRow, ctCol, subRow, subCol);
-                    return noRepetitions = false;
+                    ++colCount;
                 }
-                checkedNumbers[colCount] = num;
-                printCheckArray();
-                ++colCount;
-                //     }
             }
         }
         return noRepetitions;

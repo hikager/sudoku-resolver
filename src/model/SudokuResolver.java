@@ -1,6 +1,5 @@
 package model;
 
-import static java.lang.System.exit;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -93,8 +92,8 @@ public class SudokuResolver extends Sudoku {
         if (isValidSudoku) {
             //resolve the matrix here!
             //start filling matrices (set the boolean matrix and input values
-            prepareMatrices();
 
+            prepareMatrices();
             start();
             //method to start the calculus/resolving-part
         } else {
@@ -182,6 +181,7 @@ public class SudokuResolver extends Sudoku {
     }
 
     private void checkSudoku() {
+        info();
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -190,7 +190,7 @@ public class SudokuResolver extends Sudoku {
                 System.out.println("Check sudoku state on resolving:");
                 System.out.println(this.getComplexSudokuStateFormatted());
                 this.semaphore.release();
-                System.exit(0);
+                //  System.exit(0);
                 restartSubMatricesThreads();
 
             } catch (InterruptedException ex) {
@@ -214,10 +214,6 @@ public class SudokuResolver extends Sudoku {
         }
     }
 
-    private void checkCurrentMatrix() {
-
-    }
-
     private boolean hasValidNumbers(int row, int col, int rowSub, int colSub) {
         return checkOnRowsConstant(row, rowSub)
                 && checkOnColumnsConstant(col, colSub)
@@ -236,4 +232,14 @@ public class SudokuResolver extends Sudoku {
         return true;
     }
 
+    private void info() {
+        try {
+            this.semaphore.acquire();
+            popUpMSG.setinfoMSG("Resolving your sudoku.\n(please, quit the windows to keep resolving)");
+            popUpMSG.InfoMSG();
+            this.semaphore.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SudokuResolver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
