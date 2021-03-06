@@ -1,5 +1,6 @@
 package model;
 
+import static java.lang.System.exit;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -189,7 +190,9 @@ public class SudokuResolver extends Sudoku {
                 System.out.println("Check sudoku state on resolving:");
                 System.out.println(this.getComplexSudokuStateFormatted());
                 this.semaphore.release();
+                System.exit(0);
                 restartSubMatricesThreads();
+
             } catch (InterruptedException ex) {
                 Logger.getLogger(SudokuResolver.class.getName()).log(Level.SEVERE, null, ex);
             }
